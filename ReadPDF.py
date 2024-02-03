@@ -1,5 +1,6 @@
 import glob
 import os
+import re
 from PyPDF2 import PdfReader
 
 file_path = r"C:\Users\LEGION\Downloads"
@@ -15,8 +16,18 @@ def getting_latest_downloaded_folder(self):
     return latest_file
 
 
-def extracting_text_from_pdf(path):
+def extracting_amount_due_from_pdf(path):
     reader = PdfReader(path)
-    page = reader.pages[0]
-    return page.extract_text()
+    text = reader.pages[0].extract_text()
+
+    # checks for the presence of keyword (specified by the RegEx)
+    pattern = re.compile(r'(€[\d.,]+) Amount due')
+    match = pattern.search(text)
+
+    # returns amount due if keyword is found
+    if match:
+        amount = match.group(0) # match.group(1) gives the 1st parenthesized value so (€0.75)
+        return amount
+    else:
+        return "No matching amount found in text file."
 
