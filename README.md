@@ -5,7 +5,7 @@
 manual tasks and optimise the process of acquiring data.</p>
 <p>This project was initiated in response to a request from my brother who was growing tired of manually checking his
 outstanding electricity bill.</p>
-<p>This project makes use of <a href="(https://www.selenium.dev/">Selenium ID</a>E for automation</p>
+<p>This project makes use of <a href="https://www.selenium.dev/">Selenium IDE</a> for automation</p>
 
 ### How It Works
 <ol>
