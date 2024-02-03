@@ -5,7 +5,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support import expected_conditions as EC
 
-import readPDF
+import ReadPDF
 
 file_path = r"C:\Users\LEGION\Downloads"
 
@@ -47,5 +47,5 @@ bill.click()
 WebDriverWait(driver, 10).until(EC.number_of_windows_to_be(2))
 driver.switch_to.window(driver.window_handles[1])
 
-latest_download = readPDF.getting_latest_downloaded_folder(file_path)
-
+latest_download = ReadPDF.getting_latest_downloaded_folder(file_path)
+download_text = ReadPDF.extracting_text_from_pdf(latest_download)
