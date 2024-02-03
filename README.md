@@ -18,12 +18,11 @@ outstanding electricity bill.</p>
 
 ### Steps to take:
 <p>You only need to do this once.</p>
-<p>Before running this downloader, please ensure that you have the necessary packages installed.</p>
+<p>Before running this downloader, please ensure that you have the necessary 
+packages installed by running this command.</p>
 
 ```
-pip install selenium
-pip install webdriver-manager
-pip install PyPDF2
+pip install -r requirements.txt
 ```
 <p>Change the desired file path in the main python script (AutomatedBill.py) to wherever you want your file to be 
 saved.</p>
