@@ -15,18 +15,21 @@ options = Options()
 options.add_experimental_option("detach", True)
 options.add_experimental_option('prefs', {
     "plugins.always_open_pdf_externally": True,
-    "download_default_directory": file_path}) # change file path accordingly
+    "download_default_directory": file_path,
+    "plugins.plugins_list": [{"enabled": False, "name": "Chrome PDF Viewer"}]
+    # prevents file from opening automatically
+})
 
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()),
                           options=options)
 
 driver.get("https://energyonline.energia.ie/")
-driver.maximize_window()
 
 # handling cookie popup
+driver.implicitly_wait(5)
+# waits for button to be clickable
+WebDriverWait(driver, 10).until(EC.element_to_be_clickable(("xpath", "//button[@id='onetrust-accept-btn-handler']")))
 cookie_popup = driver.find_element("xpath", "//button[@id='onetrust-accept-btn-handler']")
-# waits for page to load
-WebDriverWait(driver, 10).until(EC.element_to_be_clickable(cookie_popup))
 cookie_popup.click()
 
 # automatic login
@@ -40,6 +43,8 @@ login.click()
 
 # downloading electricity bill
 driver.implicitly_wait(5)
+# waits for button to be clickable
+WebDriverWait(driver, 10).until(EC.element_to_be_clickable(("xpath", "//button[@id='last-bill-btn-link-2']")))
 bill = driver.find_element("xpath", "//button[@id='last-bill-btn-link-2']")
 bill.click()
 
@@ -48,4 +53,7 @@ WebDriverWait(driver, 10).until(EC.number_of_windows_to_be(2))
 driver.switch_to.window(driver.window_handles[1])
 
 latest_download = ReadPDF.getting_latest_downloaded_folder(file_path)
-download_text = ReadPDF.extracting_text_from_pdf(latest_download)
+amount_due = ReadPDF.extracting_amount_due_from_pdf(latest_download)
+print(amount_due)
+
+driver.quit()
