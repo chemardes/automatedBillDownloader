@@ -24,17 +24,13 @@ packages installed by running this command.</p>
 ```
 pip install -r requirements.txt
 ```
-<p>Change the desired file path in the main python script (AutomatedBill.py) to wherever you want your file to be 
-saved.</p>
+<p>Change the environment variables in the .env file 
+to set up your desired file path & login details.</p>
 
 ```
-file_path = r"C:\Users\XXXXX\Downloads"
+FILE_PATH=C:\Users\***\Downloads
+LOGIN_USERNAME="************"
+LOGIN_PASSWORD="************"
 ```
 
-<p>Set your login details</p>
-
-```
-login_username.send_keys("**********")
-login_password.send_keys("**********")
-```
 
