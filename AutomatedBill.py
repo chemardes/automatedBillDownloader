@@ -14,10 +14,22 @@ from dotenv import load_dotenv
 # importing environment variables
 load_dotenv()
 
+MANDATORY_ENV_VARS = ["FILE_PATH", "LOGIN_USERNAME", "LOGIN_PASSWORD"]
+
 # setting environment variables
 file_path = os.getenv("FILE_PATH")
 login_username = os.getenv("LOGIN_USERNAME")
 login_password = os.getenv("LOGIN_PASSWORD")
+
+
+def check_for_env_var():
+    # checking that environment variables exist
+    for var in MANDATORY_ENV_VARS:
+        if var not in os.environ or not os.environ[var]:
+            # raises an error if variable has not been set
+            raise EnvironmentError(f"Failed because {var} is not set.")
+        else:
+            continue
 
 
 def get_driver():
@@ -48,6 +60,9 @@ def getting_latest_downloaded_folder(self):
 
 
 def extracting_amount_due_from_pdf(path):
+    # function extract the downloaded PDF to text
+    # and search for the amount due
+
     reader = PdfReader(path)
     text = reader.pages[0].extract_text()
 
@@ -91,8 +106,11 @@ def automate_download(driver):
 
 
 def main():
+    check_for_env_var()
     driver = get_driver()
     latest_download = automate_download(driver)
+    while latest_download is None:
+        driver.implicitly_wait(5)
     amount_due = extracting_amount_due_from_pdf(latest_download)
     print(amount_due)
     driver.quit()
